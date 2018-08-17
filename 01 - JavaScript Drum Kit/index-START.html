@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+  <div class="overlay"></div>
 
   <div class="keys">
     <div data-key="65" class="key">
@@ -58,6 +58,36 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  //adding script for playing sounds Yo!!
+  //point keys const to all the keys
+  const keys = document.querySelectorAll('key');
+  
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    e.target.classList.remove('playing');
+  }
+
+
+  function playSound(e) {
+    //e is the event which is going to pass
+    //console.log(e.keyCode);
+
+    const a = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    if(!a) 
+      return;
+    key.classList.add('playing');
+    a.currentTime=0;
+    a.play();
+    //console.log('playing');
+  }
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  //another event Listener for window event when key is pressed
+  window.addEventListener('keydown',playSound);
+
+  
+
+
 
 </script>
 
